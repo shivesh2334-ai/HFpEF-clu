@@ -14,7 +14,7 @@ terminology. Always add a brief note that final decisions require clinical judgm
 guideline. Keep answers focused and under ~200 words unless asked to go deeper.`;
 
 export async function POST(req: NextRequest) {
-  const apiKey = process.env.LLM_API_KEY;
+  const apiKey = process.env.LLM_API_KEY || process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY || process.env.CLAUDE_API_KEY;
   const baseUrl = process.env.LLM_BASE_URL || "https://openrouter.ai/api/v1";
   const model = process.env.LLM_MODEL || "meta-llama/llama-3.3-70b-instruct:free";
 
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         error:
-          "No LLM_API_KEY configured. Add LLM_API_KEY (and optionally LLM_BASE_URL / LLM_MODEL) as environment variables in Vercel — see README for free-tier provider options.",
+          "No LLM_API_KEY (or GROQ_API_KEY/GEMINI_API_KEY/CLAUDE_API_KEY) configured. Add it (and optionally LLM_BASE_URL / LLM_MODEL) as environment variables in Vercel — see README for free-tier provider options.",
       },
       { status: 500 }
     );
