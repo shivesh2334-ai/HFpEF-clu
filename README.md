@@ -20,7 +20,7 @@ Stack: Next.js 14 (App Router) · TypeScript · Tailwind CSS. No database requir
 4. **Medications** — indications, starting/target doses, contraindications, and cautions for each
    drug class (SGLT2i, nonsteroidal and steroidal MRA, incretin-based therapy, ARNI, ARB).
 5. **Ask HFpEF** — a chat interface answering free-text questions, grounded by a system prompt
-   describing the pathway content, backed by any OpenAI-compatible LLM endpoint (see below).
+   describing the pathway content, backed by direct provider APIs for Groq, Gemini, or Claude.
 
 This is a reference/decision-support tool for a practicing clinician — it does not store patient
 data and makes no determination on its own; all outputs require clinical judgment.
@@ -58,22 +58,21 @@ Open http://localhost:3000.
 4. Deploy. `vercel.json` pins the deployment region to `bom1` (Mumbai) to match existing
    projects.
 
-## Configure the chatbot (free-tier LLM)
+## Configure the chatbot (direct provider APIs)
 
-The `/api/chat` route calls any **OpenAI-compatible** `chat/completions` endpoint, so you can
-point it at whichever free tier you have access to. Set these as Vercel Environment Variables
-(Project → Settings → Environment Variables) — see `.env.example` for the exact values per
-provider:
+The `/api/chat` route now calls provider APIs directly (no generic OpenAI-compatible base URL).
+Set these as Vercel Environment Variables (Project → Settings → Environment Variables):
 
-| Provider | LLM_BASE_URL | LLM_MODEL | Notes |
-|---|---|---|---|
-| OpenRouter | `https://openrouter.ai/api/v1` | `meta-llama/llama-3.3-70b-instruct:free` | Many `:free`-suffixed models |
-| Groq | `https://api.groq.com/openai/v1` | `llama-3.3-70b-versatile` | Fast, generous free tier |
-| Mistral | `https://api.mistral.ai/v1` | `mistral-small-latest` | Free tier available |
-| Google Gemini | `https://generativelanguage.googleapis.com/v1beta/openai` | `gemini-1.5-flash` | Uses Gemini's OpenAI-compatible endpoint |
+- `LLM_PROVIDER` = `groq`, `gemini`, or `claude`
+- For API key, set the provider-specific key (`GROQ_API_KEY`, `GEMINI_API_KEY`, or `CLAUDE_API_KEY`)
+  or set `LLM_API_KEY` as a shared fallback key.
+- Optional model override variables:
+  - `GROQ_MODEL` (default `llama-3.3-70b-versatile`)
+  - `GEMINI_MODEL` (default `gemini-1.5-flash`)
+  - `CLAUDE_MODEL` (default `claude-3-5-sonnet-latest`)
 
-Always set `LLM_API_KEY` to the API key from whichever provider you choose. Without it, the
-other four tabs still work fully — only the chat tab needs this key.
+Without valid provider credentials, the other four tabs still work fully — only the chat tab
+needs these keys.
 
 **Never commit an API key.** `.env.local` is gitignored; use Vercel's Environment Variables UI
 for production.
