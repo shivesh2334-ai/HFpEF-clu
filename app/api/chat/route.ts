@@ -14,9 +14,9 @@ terminology. Always add a brief note that final decisions require clinical judgm
 guideline. Keep answers focused and under ~200 words unless asked to go deeper.`;
 
 export async function POST(req: NextRequest) {
-  const apiKey = process.env.LLM_API_KEY || process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY || process.env.CLAUDE_API_KEY;
-  const baseUrl = process.env.LLM_BASE_URL || "https://openrouter.ai/api/v1";
-  const model = process.env.LLM_MODEL || "meta-llama/llama-3.3-70b-instruct:free";
+  const apiKey = (process.env.LLM_API_KEY || process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY || process.env.CLAUDE_API_KEY)?.trim();
+  const baseUrl = (process.env.LLM_BASE_URL || "https://openrouter.ai/api/v1").trim();
+  const model = (process.env.LLM_MODEL || "meta-llama/llama-3.3-70b-instruct:free").trim();
 
   if (!apiKey) {
     return NextResponse.json(
