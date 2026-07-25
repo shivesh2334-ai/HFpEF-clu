@@ -50,7 +50,7 @@ export default function Chatbot() {
       <div className="px-5 py-4 border-b border-pathway-line">
         <p className="font-display text-lg text-ink">Ask about HFpEF</p>
         <p className="text-xs text-ink/50">
-          Grounded in the 2026 ACC ECDP. Answers require a configured LLM_API_KEY — see README.
+          Grounded in the 2026 ACC ECDP. Answers require a configured API key (LLM_API_KEY, GROQ_API_KEY, GEMINI_API_KEY, or CLAUDE_API_KEY) — see README.
         </p>
       </div>
 
