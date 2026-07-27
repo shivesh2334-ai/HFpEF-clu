@@ -290,7 +290,7 @@ export default function ResearchPortal() {
         </div>
 
         {spreadsheetUrl && (
-          <a href={spreadsheetUrl} target="_blank" rel="noreferrer" className="mt-3 inline-block text-sm text-pathway-teal underline">
+          <a href={spreadsheetUrl.startsWith("https://") ? spreadsheetUrl : `https://docs.google.com/spreadsheets/d/${spreadsheetId}`} target="_blank" rel="noreferrer" className="mt-3 inline-block text-sm text-pathway-teal underline">
             Open connected spreadsheet in Google Drive →
           </a>
         )}
