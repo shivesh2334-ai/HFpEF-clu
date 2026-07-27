@@ -6,12 +6,14 @@ import ScoreCalculators from "@/components/ScoreCalculators";
 import TreatmentPlan from "@/components/TreatmentPlan";
 import Medications from "@/components/Medications";
 import Chatbot from "@/components/Chatbot";
+import ResearchPortal from "@/components/ResearchPortal";
 
 const TABS = [
   { key: "tree", label: "Decision tree" },
   { key: "scores", label: "Diagnostic scores" },
   { key: "treatment", label: "Treatment & follow-up" },
   { key: "meds", label: "Medications" },
+  { key: "research", label: "Research portal" },
   { key: "chat", label: "Ask HFpEF" },
 ] as const;
 
@@ -53,6 +55,7 @@ export default function Page() {
       {tab === "scores" && <ScoreCalculators />}
       {tab === "treatment" && <TreatmentPlan />}
       {tab === "meds" && <Medications />}
+      {tab === "research" && <ResearchPortal />}
       {tab === "chat" && <Chatbot />}
 
       <footer className="mt-16 border-t border-pathway-line pt-6 text-xs text-ink/40">
